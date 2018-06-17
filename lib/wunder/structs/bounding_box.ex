@@ -27,7 +27,7 @@ defmodule Wunder.Structs.BoundingBox do
         },
         %Coordinate{lat: lat, lon: lon}
       ) do
-    lat in lat_bl..lat_tr && lon in lon_bl..lon_tr
+    lat >= lat_bl && lat <= lat_tr && lon >= lon_bl && lon <= lon_tr
   end
 
   defp prepare_corners(corner_a = [x1, y1], corner_c = [x3, y3]) do

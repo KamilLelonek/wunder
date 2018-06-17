@@ -36,25 +36,25 @@ defmodule Wunder.Structs.BoundingBoxTest do
     test "should confirm a Cooridnate belongs to a BoundingBox" do
       bounding_box = %BoundingBox{
         bottom_left: %Coordinate{lat: 0, lon: 0},
-        bottom_right: %Coordinate{lat: 20, lon: 0},
-        top_left: %Coordinate{lat: 0, lon: 20},
-        top_right: %Coordinate{lat: 20, lon: 20}
+        bottom_right: %Coordinate{lat: 2.50, lon: 0},
+        top_left: %Coordinate{lat: 0, lon: 20.5},
+        top_right: %Coordinate{lat: 20.5, lon: 20.5}
       }
 
-      coordinate = %Coordinate{lat: 10, lon: 10}
+      coordinate = %Coordinate{lat: 10.5, lon: 10.5}
 
       assert BoundingBox.contains?(bounding_box, coordinate)
     end
 
     test "should reject a Cooridnate belongs to a BoundingBox" do
       bounding_box = %BoundingBox{
-        bottom_left: %Coordinate{lat: -10, lon: -10},
-        bottom_right: %Coordinate{lat: 10, lon: -10},
-        top_left: %Coordinate{lat: -10, lon: 10},
-        top_right: %Coordinate{lat: 10, lon: 10}
+        bottom_left: %Coordinate{lat: -10.3, lon: -10.3},
+        bottom_right: %Coordinate{lat: 10.3, lon: -10.3},
+        top_left: %Coordinate{lat: -10.3, lon: 10.3},
+        top_right: %Coordinate{lat: 10.3, lon: 10.3}
       }
 
-      coordinate = %Coordinate{lat: 15, lon: 20}
+      coordinate = %Coordinate{lat: 15.3, lon: 20.3}
 
       refute BoundingBox.contains?(bounding_box, coordinate)
     end
