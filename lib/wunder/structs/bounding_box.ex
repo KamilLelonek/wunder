@@ -8,6 +8,7 @@ defmodule Wunder.Structs.BoundingBox do
   alias __MODULE__
   alias Wunder.Structs.Coordinate
 
+  # NOTE: consider validation of BoundingBox shape
   def new([corner_a, corner_c]) do
     [c1, c2, c3, c4] = prepare_corners(corner_a, corner_c)
 
@@ -17,6 +18,16 @@ defmodule Wunder.Structs.BoundingBox do
       top_left: c3,
       top_right: c4
     }
+  end
+
+  def contains?(
+        %BoundingBox{
+          bottom_left: %Coordinate{lat: lat_bl, lon: lon_bl},
+          top_right: %Coordinate{lat: lat_tr, lon: lon_tr}
+        },
+        %Coordinate{lat: lat, lon: lon}
+      ) do
+    lat in lat_bl..lat_tr && lon in lon_bl..lon_tr
   end
 
   defp prepare_corners(corner_a = [x1, y1], corner_c = [x3, y3]) do

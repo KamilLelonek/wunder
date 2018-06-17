@@ -1,7 +1,7 @@
 defmodule Wunder.Structs.BoundingBoxTest do
   use ExUnit.Case, async: true
 
-  alias Wunder.Structs.BoundingBox
+  alias Wunder.Structs.{BoundingBox, Coordinate}
 
   describe "new" do
     test "should properly order positive coordinates" do
@@ -29,6 +29,34 @@ defmodule Wunder.Structs.BoundingBoxTest do
                top_left: %{lat: -1, lon: 4},
                top_right: %{lat: 3, lon: 4}
              } = BoundingBox.new([[-1, -2], [3, 4]])
+    end
+  end
+
+  describe "contains?" do
+    test "should confirm a Cooridnate belongs to a BoundingBox" do
+      bounding_box = %BoundingBox{
+        bottom_left: %Coordinate{lat: 0, lon: 0},
+        bottom_right: %Coordinate{lat: 20, lon: 0},
+        top_left: %Coordinate{lat: 0, lon: 20},
+        top_right: %Coordinate{lat: 20, lon: 20}
+      }
+
+      coordinate = %Coordinate{lat: 10, lon: 10}
+
+      assert BoundingBox.contains?(bounding_box, coordinate)
+    end
+
+    test "should reject a Cooridnate belongs to a BoundingBox" do
+      bounding_box = %BoundingBox{
+        bottom_left: %Coordinate{lat: -10, lon: -10},
+        bottom_right: %Coordinate{lat: 10, lon: -10},
+        top_left: %Coordinate{lat: -10, lon: 10},
+        top_right: %Coordinate{lat: 10, lon: 10}
+      }
+
+      coordinate = %Coordinate{lat: 15, lon: 20}
+
+      refute BoundingBox.contains?(bounding_box, coordinate)
     end
   end
 end
