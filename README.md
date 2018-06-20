@@ -1,5 +1,7 @@
 # wunder
 
+You will find the usage examples in the `test` directory.
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
